@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="hu" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hámori mesék</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#eaddd7',
+                            300: '#e0cec7',
+                            400: '#d2bab0',
+                            500: '#bfa094',
+                            600: '#a18072',
+                            700: '#846358',
+                            800: '#674a40',
+                            900: '#4b352d',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdf8f6;
+            color: #4b352d;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .glass {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Új Gördülési Animációk */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-icon {
+            opacity: 0;
+            transform: scale(0.5) rotate(-20deg);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .reveal-icon.active {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center glass transition-transform duration-300">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-brand-900 rounded-lg flex items-center justify-center text-white transform hover:rotate-12 transition-transform duration-300 reveal-icon active">
+                <i data-lucide="book-open"></i>
+            </div>
+            <span class="font-serif text-2xl font-bold tracking-tight reveal-up active">Hámori mesék</span>
+        </div>
+        <div class="hidden md:flex gap-8 font-medium">
+            <a href="#fooldal" class="hover:text-brand-600 transition-colors reveal-up active" style="transition-delay: 0.1s">Főoldal</a>
+            <a href="#tortenetek" class="hover:text-brand-600 transition-colors reveal-up active" style="transition-delay: 0.2s">Történetek</a>
+            <a href="#rolam" class="hover:text-brand-600 transition-colors reveal-up active" style="transition-delay: 0.3s">Rólam</a>
+            <a href="#kapcsolat" class="hover:text-brand-600 transition-colors reveal-up active" style="transition-delay: 0.4s">Kapcsolat</a>
+        </div>
+        <div class="flex items-center gap-2 reveal-up active" style="transition-delay: 0.5s">
+            <div class="relative flex items-center">
+                <input type="text" id="search-input" placeholder="Keresés a mesékben..." 
+                       class="opacity-0 w-0 transition-all duration-300 px-0 py-2 rounded-full border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white/90 text-brand-900 text-sm absolute right-10">
+                <button onclick="toggleSearch()" class="p-2 hover:bg-brand-100 rounded-full transition-all transform hover:scale-110 z-10 relative bg-transparent">
+                    <i data-lucide="search"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section id="fooldal" class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+            <div class="absolute inset-0 z-0">
+                <img 
+                    src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=2000" 
+                    alt="Hero background" 
+                    class="w-full h-full object-cover opacity-20 transform scale-105 animate-[pulse_10s_ease-in-out_infinite]"
+                    referrerpolicy="no-referrer"
+                >
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-50/0 via-brand-50/50 to-brand-50"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-6 max-w-4xl">
+                <div>
+                    <span class="inline-block px-4 py-1 rounded-full bg-brand-900 text-white text-sm font-medium mb-6 animate-bounce reveal-up">
+                        Üdvözöllek a mesék világában
+                    </span>
+                    <h1 class="font-serif text-6xl md:text-8xl font-bold leading-tight mb-8 reveal-up" style="transition-delay: 0.1s">
+                        Ahol a szavak <br />
+                        <span class="italic text-brand-600 underline decoration-brand-200 underline-offset-8">életre kelnek</span>
+                    </h1>
+                    <p class="text-xl text-brand-700 mb-10 max-w-2xl mx-auto leading-relaxed reveal-up" style="transition-delay: 0.2s">
+                        Fedezd fel a Hámori mesék legújabb rövid történeteit, és legendáit, egyben Hegedűs Krisztina írói világát, ahol a képzelet határtalan.
+                        Egy utazás a képzelet határán túlra.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-up" style="transition-delay: 0.3s">
+                        <a href="#tortenetek" class="px-8 py-4 bg-brand-900 text-white rounded-full font-bold hover:bg-brand-800 transition-all transform hover:scale-105 shadow-xl shadow-brand-900/20">
+                            Olvasás megkezdése
+                       
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-brand-400 animate-bounce cursor-pointer reveal-up" onclick="document.getElementById('tortenetek').scrollIntoView({behavior: 'smooth'})" style="transition-delay: 0.5s">
+                <div class="w-6 h-10 border-2 border-brand-300 rounded-full flex justify-center pt-2">
+                    <div class="w-1 h-2 bg-brand-400 rounded-full"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tortenetek" class="py-32 px-6 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div class="max-w-2xl reveal-up">
+                    <h2 class="font-serif text-5xl font-bold mb-6">Legfrissebb meséink</h2>
+                    <p class="text-xl text-brand-600">
+                        Merülj el a legújabb történetekben, amelyek elrepítenek a képzelet legtávolabbi zugaiba.
+                    </p>
+                </div>
+                <div class="flex gap-4 flex-wrap reveal-up" style="transition-delay: 0.2s;">
+                    <button class="category-btn px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 bg-brand-900 text-white shadow-md" data-category="Összes">Összes</button>
+                    <button class="category-btn px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 glass hover:bg-brand-100" data-category="Mese">Mese</button>
+                    <button class="category-btn px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 glass hover:bg-brand-100" data-category="Legenda">Legenda</button>
+                    <button class="category-btn px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 glass hover:bg-brand-100" data-category="Novella">Novella</button>
+                </div>
+            </div>
+
+            <div id="stories-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                </div>
+        </section>
+
+        <section id="rolam" class="py-20 px-6 max-w-7xl mx-auto overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative group reveal-up">
+                    <div class="absolute inset-0 bg-brand-400 rounded-[2rem] transform rotate-3 group-hover:rotate-6 transition-transform duration-500 opacity-20"></div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1455390582262-044cdead27d8?auto=format&fit=crop&q=80&w=1000" 
+                        alt="   " 
+                        class="relative z-10 w-full h-[500px] object-cover rounded-[2rem] shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500"
+                        referrerpolicy="no-referrer"
+                    >
+                </div>
+                <div class="reveal-up" style="transition-delay: 0.2s;">
+                    <span class="text-brand-600 font-bold tracking-widest uppercase text-sm mb-4 block">Bemutatkozás</span>
+                    <p class="text-xl text-brand-700 leading-relaxed mb-6 font-light">
+                        "Ide írni"
+                    </p>
+                    <p class="text-xl text-brand-700 leading-relaxed mb-10 font-light">
+                        Célom, hogy írásaimmal elrepítselek téged a képzelet határain túlra, ahol a legendák, novellák és apró csodák újra életre kelnek. Tarts velem ezen a különleges utazáson!
+                    </p>
+                    <div class="flex items-center gap-6">
+                        <a href="https://facebook.com/hamorimesek" target="_blank" class="flex items-center gap-3 text-brand-900 font-bold hover:text-brand-600 transition-colors group">
+                            <div class="w-12 h-12 rounded-full border-2 border-brand-200 flex items-center justify-center group-hover:bg-brand-100 transition-colors">
+                                <i data-lucide="facebook" class="w-5 h-5"></i>
+                            </div>
+                            Facebook oldal
+                        </a>
+                        <a href="mailto:hamorimesek@gmail.com" class="flex items-center gap-3 text-brand-900 font-bold hover:text-brand-600 transition-colors group">
+                            <div class="w-12 h-12 rounded-full border-2 border-brand-200 flex items-center justify-center group-hover:bg-brand-100 transition-colors">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            Írj nekem
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kapcsolat" class="py-32 mt-20 bg-brand-900 text-white overflow-hidden relative">
+            <div class="absolute -right-20 -top-20 w-64 h-64 border border-white/10 rounded-full animate-spin-slow reveal-icon"></div>
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal-up">
+                <i data-lucide="mail-open" class="w-16 h-16 mx-auto mb-8 text-brand-300 reveal-icon"></i>
+                <h2 class="font-serif text-5xl font-bold mb-8">Szeretnél értesülni az új mesékről?</h2>
+                <p class="text-xl text-brand-300 mb-12">
+                    Iratkozz fel hírlevelünkre, és küldjük neked a legújabb történeteket közvetlenül az e-mail fiókodba.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto group" onsubmit="event.preventDefault(); alert('Köszönjük a feliratkozást! Hamarosan küldjük a legszebb meséket.'); this.reset();">
+                    <input 
+                        type="email" 
+                        placeholder="E-mail címed" 
+                        class="flex-grow px-8 py-4 rounded-full bg-white/10 border border-white/20 focus:outline-none focus:bg-white/20 focus:border-white/50 transition-all text-white placeholder-white/50"
+                        required
+                    >
+                    <button type="submit" class="px-8 py-4 bg-white text-brand-900 rounded-full font-bold hover:bg-brand-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                        Feliratkozás <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 px-6 border-t border-brand-200">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 reveal-up">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 mb-6 group cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-8 h-8 bg-brand-900 rounded flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                    </div>
+                    <span class="font-serif text-xl font-bold">Hámori mesék</span>
+                </div>
+                <p class="text-brand-600 max-w-sm leading-relaxed">
+                    A Hámori mesék egy független irodalmi projekt, amelynek célja a magyar mesehagyomány ápolása és modern köntösbe öltöztetése.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-xs tracking-widest text-brand-400">Navigáció</h4>
+                <ul class="space-y-4 font-medium">
+                    <li><a href="#tortenetek" class="hover:text-brand-600 transition-colors flex items-center gap-2 group"><i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> Történetek</a></li>
+                    <li><a href="#rolam" class="hover:text-brand-600 transition-colors flex items-center gap-2 group"><i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> Rólam</a></li>
+                    <li><a href="#kapcsolat" class="hover:text-brand-600 transition-colors flex items-center gap-2 group"><i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> Kapcsolat</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-xs tracking-widest text-brand-400">Kövess minket</h4>
+                <ul class="space-y-4 font-medium">
+                    <li><a href="https://facebook.com/hamorimesek" target="_blank" class="hover:text-brand-600 transition-colors flex items-center gap-2 group"><i data-lucide="facebook" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> Facebook</a></li>
+                    <li><a href="mailto:hamorimesek@gmail.com" class="hover:text-brand-600 transition-colors flex items-center gap-2 group"><i data-lucide="mail" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> E-mail</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-10 border-t border-brand-100 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-brand-400 reveal-up">
+            <p>© 2024 Hámori mesék. Minden jog fenntartva.</p>
+            <div class="flex gap-8">
+                <a href="#" class="hover:text-brand-900 transition-colors">Adatvédelem</a>
+                <a href="#" class="hover:text-brand-900 transition-colors">Sütik kezelése</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="story-detail" class="fixed inset-0 z-[60] bg-brand-50 overflow-y-auto hidden">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button 
+                onclick="closeStory()"
+                class="flex items-center gap-2 text-brand-600 font-bold mb-12 hover:text-brand-900 transition-colors group bg-transparent border-none"
+            >
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:-translate-x-2 transition-transform">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </div>
+                Vissza a listához
+            </button>
+
+            <img id="detail-image" src="" alt="" class="w-full h-[50vh] object-cover rounded-[2rem] shadow-2xl mb-12 transition-all hover:scale-[1.02] duration-500" referrerpolicy="no-referrer">
+
+            <div class="flex items-center gap-6 text-sm text-brand-400 mb-6 font-medium uppercase tracking-widest">
+                <span id="detail-category" class="flex items-center gap-2 bg-brand-100 px-4 py-2 rounded-full text-brand-900 font-bold"></span>
+                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> <span id="detail-date"></span></span>
+                <span class="flex items-center gap-1"><i data-lucide="user" class="w-4 h-4"></i> <span id="detail-author"></span></span>
+            </div>
+
+            <h2 id="detail-title" class="font-serif text-5xl md:text-7xl font-bold mb-12 leading-tight"></h2>
+
+            <div class="prose prose-xl prose-brand max-w-none">
+                <p id="detail-excerpt" class="font-serif text-2xl italic text-brand-700 mb-12 leading-relaxed border-l-4 border-brand-300 pl-8 bg-brand-100/50 py-4 pr-4 rounded-r-xl"></p>
+                <div id="detail-content" class="text-xl text-brand-900 leading-loose whitespace-pre-line font-light"></div>
+            </div>
+
+            <div class="mt-20 pt-10 border-t border-brand-200 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex gap-4 items-center">
+                    <span class="text-brand-400 font-bold uppercase text-xs tracking-widest">Megosztás:</span>
+                    <a href="https://facebook.com/hamorimesek" target="_blank" class="w-12 h-12 rounded-full border border-brand-200 flex items-center justify-center hover:bg-brand-900 hover:text-white transform hover:scale-110 transition-all text-brand-600">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="mailto:hamorimesek@gmail.com?subject=Nézd meg ezt a mesét" class="w-12 h-12 rounded-full border border-brand-200 flex items-center justify-center hover:bg-brand-900 hover:text-white transform hover:scale-110 transition-all text-brand-600">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                <button onclick="nextStory()" class="px-8 py-4 bg-brand-900 text-white rounded-full font-bold hover:bg-brand-800 transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 group">
+                    Következő mese <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORIES = [
+            {
+                id: '1',
+                title: 'Az elfeledett erdő titka',
+                excerpt: 'Egy kisfiú felfedez egy rejtett ösvényt, amely egy varázslatos világba vezet, ahol a fák suttognak.',
+                content: 'Egyszer volt, hol nem volt, volt egy hatalmas, sötét erdő a falu szélén. A falusiak azt mondták, hogy az erdő el van átkozva, és senki sem merészkedett be a sűrűjébe. De Marci, a falu legkíváncsibb kisfia, nem hitt a mesékben. Egy nap, miközben egy eltévedt labdát keresett, rábukkant egy keskeny, benőtt ösvényre, amit addig sosem látott...\n\nAz ösvény mélyebbre vezette, mint gondolta volna. Ahogy haladt, a levegő megváltozott: édes illat lengte be a tájat, és a madarak éneke tisztábban szólt, mint bárhol máshol. Hirtelen egy tisztásra ért, ahol a fák levelei ezüstösen csillogtak a napfényben. "Isten hozott, vándor," suttogta egy öreg tölgyfa, és Marci ekkor jött rá, hogy az erdő nem elátkozott, hanem elfeledett.',
+                date: '2024. március 15.',
+                author: 'Hegedűs Krisztina',
+                category: 'Mese',
+                imageUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1000'
+            },
+            {
+                id: '2',
+                title: 'A csillaghalász',
+                excerpt: 'Minden éjjel egy öregember evez ki a tó közepére, hogy összegyűjtse a vízre hullott csillagfényt.',
+                content: 'A falu melletti tó vize éjszaka olyan volt, mint egy tükör. Amikor a hold felkelt, egy apró csónak siklott ki a nádasból. Benne ült az öreg Jakab, akit a falusiak csak csillaghalásznak hívtak. Jakab nem halakat fogott, hanem egy finom szövésű hálóval a víz felszínén csillogó fényeket gyűjtötte össze.\n\n"Mire jó ez, Jakab bácsi?" kérdezte egyszer egy kislány. "Ezekből készülnek az álmok, kincsem," válaszolta az öreg mosolyogva. "Minden csillag egy-egy szép emlék vagy remény, ami leesett az égről, és én csak visszajuttatom őket oda, ahol szükség van rájuk."',
+                date: '2024. március 10.',
+                author: 'Hegedűs Krisztina',
+                category: 'Legenda',
+                imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1000'
+            },
+            {
+                id: '3',
+                title: 'A szélvári órás',
+                excerpt: 'Egy városban, ahol az idő megállt, egy különös mester próbálja újraindítani a világ szívverését.',
+                content: 'Szélvár városa különös hely volt. Ott az órák nem ketyegtek, és a nap sosem nyugodott le teljesen. Az emberek megszokták az állandóságot, de valami hiányzott: a változás öröme. A város legmagasabb tornyában élt az öreg órásmester, aki éjt nappallá téve dolgozott egy hatalmas szerkezeten.\n\nEgy reggelen, amikor a szél végre megmozdult, a toronyból hatalmas kondulás hallatszott. Az órásmesternek sikerült: az idő újra elindult. Az emberek először megijedtek, de aztán rájöttek, hogy a múló idő teszi értékesebbé a pillanatokat.',
+                date: '2024. március 5.',
+                author: 'Hámori István',
+                category: 'Novella',
+                imageUrl: 'https://images.unsplash.com/photo-1508921334172-b68ed301d82e?auto=format&fit=crop&q=80&w=1000'
+            }
+        ];
+
+        let currentStoryIndex = 0;
+        let currentFilter = 'Összes';
+
+        // KERESÉS ÉS SZŰRÉS LOGIKA JAVÍTVA
+        function toggleSearch() {
+            const input = document.getElementById('search-input');
+            if (input.classList.contains('w-0')) {
+                input.classList.remove('w-0', 'opacity-0', 'px-0');
+                input.classList.add('w-48', 'md:w-64', 'opacity-100', 'px-4');
+                input.focus();
+            } else {
+                input.classList.add('w-0', 'opacity-0', 'px-0');
+                input.classList.remove('w-48', 'md:w-64', 'opacity-100', 'px-4');
+                input.value = '';
+                renderFilteredData(); // Alaphelyzetbe állítás
+            }
+        }
+
+        // Valós idejű keresés eseményfigyelővel
+        document.getElementById('search-input').addEventListener('input', renderFilteredData);
+
+        function renderFilteredData() {
+            const term = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            const finalFiltered = STORIES.filter(s => {
+                const matchesSearch = s.title.toLowerCase().includes(term) || 
+                                      s.content.toLowerCase().includes(term) || 
+                                      s.category.toLowerCase().includes(term);
+                const matchesCategory = currentFilter === 'Összes' || s.category === currentFilter;
+                
+                return matchesSearch && matchesCategory;
+            });
+
+            renderStories(finalFiltered);
+        }
+
+        function renderStories(data) {
+            const grid = document.getElementById('stories-grid');
+            grid.innerHTML = '';
+
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-20 reveal-up active">
+                        <i data-lucide="search-x" class="w-16 h-16 mx-auto mb-4 text-brand-300"></i>
+                        <h3 class="font-serif text-3xl font-bold text-brand-900 mb-2">Nincs találat</h3>
+                        <p class="text-xl text-brand-600">Sajnos nem találtunk a keresésnek megfelelő mesét. Próbálj meg más szavakra keresni!</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            data.forEach((story, index) => {
+                const card = document.createElement('div');
+                card.className = 'group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full hover:-translate-y-2 border border-transparent hover:border-brand-200 reveal-up';
+                // Pici késleltetés a listaelemek animációjához
+                card.style.transitionDelay = `${index * 0.1}s`;
+                card.onclick = () => openStory(story.id);
+                
+                card.innerHTML = `
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${story.imageUrl}" alt="${story.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerpolicy="no-referrer">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm text-xs font-bold uppercase tracking-wider text-brand-900 shadow-sm">
+                                ${story.category}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow bg-white relative z-10">
+                        <div class="flex items-center gap-4 text-xs text-brand-400 mb-4 font-medium uppercase tracking-widest">
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> ${story.date}</span>
+                            <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5"></i> ${story.author}</span>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-brand-600 transition-colors">
+                            ${story.title}
+                        </h3>
+                        <p class="text-brand-600 line-clamp-3 mb-6 flex-grow leading-relaxed">
+                            ${story.excerpt}
+                        </p>
+                        <div class="flex items-center text-brand-900 font-bold group-hover:gap-2 transition-all mt-auto pt-4 border-t border-brand-100">
+                            Tovább olvasom <i data-lucide="chevron-right" class="w-5 h-5 text-brand-600"></i>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            lucide.createIcons();
+            initObserver(); // Újra ráengedjük a megfigyelőt az új elemekre
+        }
+
+        // Kategória szűrő gombok
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('bg-brand-900', 'text-white', 'shadow-md');
+                    b.classList.add('glass', 'hover:bg-brand-100');
+                });
+                btn.classList.remove('glass', 'hover:bg-brand-100');
+                btn.classList.add('bg-brand-900', 'text-white', 'shadow-md');
+                
+                currentFilter = btn.dataset.category;
+                renderFilteredData();
+            };
+        });
+
+        // Történet megnyitása
+        function openStory(id) {
+            currentStoryIndex = STORIES.findIndex(s => s.id === id);
+            const story = STORIES[currentStoryIndex];
+            if (!story) return;
+
+            document.getElementById('detail-image').src = story.imageUrl;
+            document.getElementById('detail-category').textContent = story.category;
+            document.getElementById('detail-date').textContent = story.date;
+            document.getElementById('detail-author').textContent = story.author;
+            document.getElementById('detail-title').textContent = story.title;
+            document.getElementById('detail-excerpt').textContent = story.excerpt;
+            document.getElementById('detail-content').textContent = story.content;
+
+            const modal = document.getElementById('story-detail');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            modal.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
+        }
+
+        function closeStory() {
+            const modal = document.getElementById('story-detail');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextStory() {
+            const modal = document.getElementById('story-detail');
+            modal.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            setTimeout(() => {
+                currentStoryIndex = (currentStoryIndex + 1) % STORIES.length;
+                openStory(STORIES[currentStoryIndex].id);
+            }, 300);
+        }
+
+        // --- ANIMÁCIÓ MEGFIGYELŐ (Scroll Animations) ---
+        function initObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 }); // Akkor kapcsol be, ha 10% látszik az elemből
+
+            // Azon ikonok megfigyelése, amik nincsenek az elején betöltve
+            document.querySelectorAll('.reveal-up, i[data-lucide]').forEach(el => {
+                if (el.tagName === 'I' && !el.classList.contains('reveal-icon')) {
+                    el.classList.add('reveal-icon');
+                }
+                observer.observe(el);
+            });
+        }
+
+        // Initial render
+        window.onload = () => {
+            renderFilteredData();
+            initObserver();
+        };
+
+        // Scroll effect for navbar
+        let lastScroll = 0;
+        window.onscroll = () => {
+            const currentScroll = window.pageYOffset;
+            const navbar = document.getElementById('navbar');
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        };
+    </script>
+</body>
+</html>
